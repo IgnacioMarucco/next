@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import CoreConcept from "./components/CoreConcept/CoreConcept";
 import TabButton from "./components/TabButton/TabButton";
 import CourseGoal from "./components/CourseGoal/CourseGoal";
+import { EXAMPLES } from "./data";
 
 // function CoreConcept(props) {
 //   return (
@@ -66,7 +67,13 @@ function App() {
             <TabButton onSelect={() => handleSelect("props")}>Props</TabButton>
             <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
           </menu>
-          {selectedTab}
+          <div id="tab-content">
+            <h3>{EXAMPLES[selectedTab]?.title}</h3>
+            <p>{EXAMPLES[selectedTab]?.description}</p>
+            <pre>
+              <code>{EXAMPLES[selectedTab]?.code}</code>
+            </pre>
+          </div>
         </section>
       </main>
     </div>
