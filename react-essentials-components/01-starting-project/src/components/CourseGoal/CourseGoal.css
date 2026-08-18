@@ -1,0 +1,27 @@
+.course-goal {
+  margin: 1rem auto;
+  padding: 0.5rem;
+  max-width: 20rem;
+  background: #fbd9a3;
+  color: #302b23;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.course-goal h2,
+.course-goal p {
+  margin: 0;
+}
+
+.course-goal h2 {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #736957;
+  margin-bottom: 0.5rem;
+}
+
+.course-goal p {
+  font-size: 0.9rem;
+  color: #474034;
+}

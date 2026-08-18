@@ -1,7 +1,8 @@
 import { CORE_CONCEPTS } from "./data";
 import Header from "./components/Header/Header";
 import CoreConcept from "./components/CoreConcept/CoreConcept";
-
+import TabButton from "./components/TabButton/TabButton";
+import CourseGoal from "./components/CourseGoal/CourseGoal";
 
 
 // function CoreConcept(props) {
@@ -39,6 +40,24 @@ function App() {
               <CoreConcept key={index} {...conceptItem} />
             ))}
           </ul>
+        </section>
+        <section id="course-goals">
+          <ul>
+            <CourseGoal title="Learn React" description="In-depth" />
+            <CourseGoal
+              title="Build a React App"
+              description="Apply your knowledge of React to build a real-world application."
+            />
+          </ul>
+        </section>
+        <section id="examples">
+          <h2>Examples</h2>
+          <menu>
+            <TabButton>Components</TabButton>
+            <TabButton>JSX</TabButton>
+            <TabButton>Props</TabButton>
+            <TabButton>State</TabButton>
+          </menu>
         </section>
       </main>
     </div>
