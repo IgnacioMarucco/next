@@ -18,13 +18,29 @@ import { EXAMPLES } from "./data";
 // }
 
 function App() {
-  const [selectedTab, setSelectedTab] = useState("Please select a tab");
+  const [selectedTab, setSelectedTab] = useState();
 
   function handleSelect(selectedTab) {
     // selectedButton => 'components', 'jsx', 'props', 'state'
     setSelectedTab(selectedTab);
     console.log(selectedTab);
   }
+
+  let tabContent = <p>Please select a tab.</p>;
+
+  if (selectedTab) {
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[selectedTab].title}</h3>
+        <p>{EXAMPLES[selectedTab].description}</p>
+        <pre>
+          <code>{EXAMPLES[selectedTab].code}</code>
+        </pre>
+      </div>
+    );
+  }
+
+  
   return (
     <div>
       <Header />
@@ -60,20 +76,32 @@ function App() {
         <section id="examples">
           <h2>Examples</h2>
           <menu>
-            <TabButton onSelect={() => handleSelect("components")}>
+            <TabButton
+              isActive={selectedTab === "components"}
+              onSelect={() => handleSelect("components")}
+            >
               Components
             </TabButton>
-            <TabButton onSelect={() => handleSelect("jsx")}>JSX</TabButton>
-            <TabButton onSelect={() => handleSelect("props")}>Props</TabButton>
-            <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
+            <TabButton
+              isActive={selectedTab === "jsx"}
+              onSelect={() => handleSelect("jsx")}
+            >
+              JSX
+            </TabButton>
+            <TabButton
+              isActive={selectedTab === "props"}
+              onSelect={() => handleSelect("props")}
+            >
+              Props
+            </TabButton>
+            <TabButton
+              isActive={selectedTab === "state"}
+              onSelect={() => handleSelect("state")}
+            >
+              State
+            </TabButton>
           </menu>
-          <div id="tab-content">
-            <h3>{EXAMPLES[selectedTab]?.title}</h3>
-            <p>{EXAMPLES[selectedTab]?.description}</p>
-            <pre>
-              <code>{EXAMPLES[selectedTab]?.code}</code>
-            </pre>
-          </div>
+          {tabContent}
         </section>
       </main>
     </div>
