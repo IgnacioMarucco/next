@@ -1,9 +1,10 @@
+import { useState } from "react";
+
 import { CORE_CONCEPTS } from "./data";
 import Header from "./components/Header/Header";
 import CoreConcept from "./components/CoreConcept/CoreConcept";
 import TabButton from "./components/TabButton/TabButton";
 import CourseGoal from "./components/CourseGoal/CourseGoal";
-
 
 // function CoreConcept(props) {
 //   return (
@@ -15,13 +16,14 @@ import CourseGoal from "./components/CourseGoal/CourseGoal";
 //   );
 // }
 
-
-
 function App() {
-      function handleSelect(selectedTab) {
-        // selectedButton => 'components', 'jsx', 'props', 'state'
-        console.log(selectedTab);
-      }
+  const [selectedTab, setSelectedTab] = useState("Please select a tab");
+
+  function handleSelect(selectedTab) {
+    // selectedButton => 'components', 'jsx', 'props', 'state'
+    setSelectedTab(selectedTab);
+    console.log(selectedTab);
+  }
   return (
     <div>
       <Header />
@@ -64,7 +66,7 @@ function App() {
             <TabButton onSelect={() => handleSelect("props")}>Props</TabButton>
             <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
           </menu>
-          Dynamic Content
+          {selectedTab}
         </section>
       </main>
     </div>
