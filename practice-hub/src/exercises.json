@@ -1,0 +1,116 @@
+{
+  "exercises": [
+    {
+      "id": "007-building-using-a-component",
+      "title": "007 Building & Using a Component",
+      "slug": "007-building-using-a-component",
+      "hasTests": true,
+      "rawInstructions": "<p>Your task is to create a new <code>MainGoal</code> component which outputs a paragraph of text that describes your main course goal (e.g., <em>\"My main goal:&nbsp;Learn&nbsp;React in-depth and from the ground up\"</em>).</p><p>You'll have to create this new component from scratch and then use it inside the <code>App</code> component's JSX code.</p><p>The finished app could look like this:</p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-09-01_14-32-46-2146d8ba9ac372f0f764d6ff0b823de3.jpg\"><p><em>(notice the \"My main goal:&nbsp;Learn react from the ground up\" text at the bottom)</em></p><p><strong>Important:</strong>&nbsp;To ensure that the automatic checks correctly detect your solution, your component <strong>must be called</strong> <code>MainGoal</code> and it also <strong>must be exported</strong>. To do that, simply add the export keyword in front of your <code>MainGoal</code> component.</p><p>The <code>MainGoal</code> component also <strong>must contain the text</strong> <em>\"My main goal:\"</em> (followed by whatever your main course goal is).</p><p><br></p>",
+      "sourceFile": "007 Building & Using a Component.html"
+    },
+    {
+      "id": "012-outputting-dynamic-content",
+      "title": "012 Outputting Dynamic Content",
+      "slug": "012-outputting-dynamic-content",
+      "hasTests": true,
+      "rawInstructions": "<p>Your task is to fill the already existing <code>User</code> component with some life! You should output the <strong>user's first name</strong> and <strong>last name</strong> (stored in the also already existing <code>userData</code> object) inside of the <code>User</code> component's <code>&lt;h2&gt;</code>&nbsp;element.</p><p>In addition, you should output the <strong>title</strong> (also stored in <code>userData</code>) in the <code>&lt;p&gt;</code> element inside the <code>User</code> component.</p><p>You're not allowed to copy &amp; paste the values into the component.</p><p>The finished app could look like this:</p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-09-01_16-03-03-88eff29a81c94385ab6667f95cf3c61e.jpg\">",
+      "sourceFile": "012 Outputting Dynamic Content.html"
+    },
+    {
+      "id": "016-working-with-props",
+      "title": "016 Working with Props",
+      "slug": "016-working-with-props",
+      "hasTests": true,
+      "rawInstructions": "<p>Your task is to make the <code>CourseGoal</code> component reusable /&nbsp;configurable. It should accept a <em>\"title\"</em>&nbsp;and a <em>\"description\"</em> input and output the received data between the <code>&lt;h2&gt;</code> (title)&nbsp;and <code>&lt;p&gt;</code>&nbsp;(description) tags.</p><p>The <code>App</code> component should then render <strong>at least two</strong> instances of the <code>CourseGoal</code> component. </p><p><strong>One of those </strong><code>CourseGoal</code> components <strong>must</strong> receive a title of <em>\"Learn React\"</em> and a description of <em>\"In-depth\"</em>. The other titles and descriptions are entirely up to you.</p><p>The finished app could look like this:</p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-09-01_16-38-57-78ee0ca041fdb0c97f79d47b85c922c0.jpg\">",
+      "sourceFile": "016 Working with Props.html"
+    },
+    {
+      "id": "021-component-composition",
+      "title": "021 Component Composition",
+      "slug": "021-component-composition",
+      "hasTests": true,
+      "rawInstructions": "<p>Your task is to create a reusable <code>Card</code> component that takes a <code>name</code> prop as an input and, in addition, can be wrapped around any JSX code.</p><p>Use the already existing <code>Card.js</code> file to create the <code>Card</code> component in there. You can add the <code>card</code> CSS class to the main wrapping element in that component for some styling.</p><p>The <code>name</code> prop should be output as a title inside the <code>Card</code> component, the wrapped JSX code should be output below that title.</p><p>For example, the final <code>Card</code> component, should be usable like this:</p><pre class=\"prettyprint linenums\">&lt;Card name=\"Maria Miles\"&gt;\n  &lt;p&gt;\n    Maria is a professor of Computer Science at the University of Illinois.\n  &lt;/p&gt;\n  &lt;p&gt;\n    &lt;a href=\"mailto:blake@example.com\"&gt;Email Maria&lt;/a&gt;\n  &lt;/p&gt;\n&lt;/Card&gt;</pre><p>This should yield the following visual <strong>output</strong>:</p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-09-06_10-54-46-2bc80121ea6359c7e4790b3a5e772db6.jpg\"></p><p><em>You can, but don't have to, tweak and edit the JSX&nbsp;code returned by the </em><code><em>App</em></code><em> component.</em></p>",
+      "sourceFile": "021 Component Composition.html"
+    },
+    {
+      "id": "024-reacting-to-events",
+      "title": "024 Reacting to Events",
+      "slug": "024-reacting-to-events",
+      "hasTests": true,
+      "rawInstructions": "<p>Your task is to work on a <em>\"User Login\"</em>&nbsp;component that has already been prepared by a colleague.</p><p>The goal is to update the data stored in the already existing <code>user</code> object with some dummy data once the <em>\"Login\"</em> button in the <code>App</code> component is pressed.</p><p>The <code>email</code> and <code>password</code> properties in the <code>user</code> object should be set to any non-empty string values of your choice. The <code>loggedIn</code> field should be set to <code>true</code>.</p><p><strong>Important:</strong>&nbsp;You <strong>don't</strong> have to fetch the values entered into the <code>&lt;input&gt;</code>&nbsp;fields - you can simply ignore those fields for now. You'll learn how to listen to keystrokes and get user input later in the course.</p><p><br></p>",
+      "sourceFile": "024 Reacting to Events.html"
+    },
+    {
+      "id": "026-configuring-event-handlers",
+      "title": "026 Configuring Event Handlers",
+      "slug": "026-configuring-event-handlers",
+      "hasTests": true,
+      "rawInstructions": "<p>Your task is to <strong>edit</strong> the <code>&lt;button&gt;</code>&nbsp;in the <code>App</code> component such that the already defined <code>handleCreateUser</code> function is called with a value for <code>name</code>.</p><p>So you must not hard-code the value that should be assigned to <code>user.name</code> in the <code>handleCreateUser</code> function but instead pass it as a value for the <code>name</code> parameter when a click event on the <code>&lt;button&gt;</code> occurs.</p><p>You <strong>don't</strong> have to care about any value that might be entered into the <code>&lt;input&gt;</code> field - it's just there for decoration purposes.</p>",
+      "sourceFile": "026 Configuring Event Handlers.html"
+    },
+    {
+      "id": "030-working-with-state",
+      "title": "030 Working with State",
+      "slug": "030-working-with-state",
+      "hasTests": true,
+      "rawInstructions": "<p>You're working on a part of an online shop where a discounted price should be displayed on the screen once the user clicked a button.</p><p>Your task is to add an <strong>event listener</strong> to listen for <strong>clicks</strong> on the button that's already included in the <code>App</code> component.</p><p>Upon a button click, the <strong>price should change</strong> from <code>$100</code> to <code>$75</code>.</p><p><strong>Add a state value</strong> to the existing <code>App</code> component function and make sure the state value is both <strong>updated</strong> upon button clicks and <strong>output</strong> as part of the JSX code.</p><p>---</p><p><strong>Important:</strong>&nbsp;In this Udemy environment, you <strong>CAN'T</strong> import &amp;&nbsp;use <code>useState</code> like this:</p><pre class=\"prettyprint linenums\">import { useState } from 'react';\n...\nuseState();</pre><p>Instead, import &amp;&nbsp;use it like this (in your component):</p><pre class=\"prettyprint linenums\">import React from 'react';\n...\nReact.useState();</pre>",
+      "sourceFile": "030 Working with State.html"
+    },
+    {
+      "id": "034-conditional-content",
+      "title": "034 Conditional Content",
+      "slug": "034-conditional-content",
+      "hasTests": true,
+      "rawInstructions": "<p>You're working on a part of a web app that's responsible for <strong>showing a warning</strong> when a user is about to perform a dangerous action.</p><p>Therefore, your task is to <strong>conditionally</strong> show a warning box once a user has <strong>clicked</strong> a specific button. Inside that warning dialog, another button allows users to <strong>dismiss the warning</strong> (i.e., remove the warning box from the screen).</p><p>The finished app should display this UI, if the <code>&lt;button&gt;</code> has not been clicked yet:</p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-01-25_19-46-44-9e8772f6a8078c9d8f887588a31cdce2.png\"></p><p>And this UI, once the button was clicked:</p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-09-06_12-57-21-a8d95b784a4564808114e8b27898a128.jpg\"><p><br></p><p>Once the \"Proceed\" button was clicked, the warning box should be removed again:</p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-01-25_19-46-45-422a664c8ab05139df000f6945d859ff.png\"></p><p>For this task, you must react to clicks on both <code>&lt;button&gt;</code> elements that are part of the starting code. The second button, outside of the <code>&lt;div&gt;</code> with the <code>id=\"alert\"</code>, should show the <code>&lt;div id=\"alert\"&gt;</code> (and all its content). The button inside that <code>&lt;div&gt;</code> should then hide it again (i.e., remove it from the DOM).</p><p>It's up to you whether you want to use a ternary expression or store the conditionally shown JSX&nbsp;code in a variable.</p><p><em>Important:&nbsp;In this Udemy code editor you may get an error if you use </em><code><em>useState()</em></code><em> - use </em><code><em>React.useState()</em></code><em> instead!</em></p>",
+      "sourceFile": "034 Conditional Content.html"
+    },
+    {
+      "id": "036-dynamic-styling",
+      "title": "036 Dynamic Styling",
+      "slug": "036-dynamic-styling",
+      "hasTests": true,
+      "rawInstructions": "<p>Your task is to <strong>dynamically</strong> apply a CSS&nbsp;class (<code>active</code>) to the <code>&lt;p&gt;Style me&lt;/p&gt;</code> element in the provided React app.</p><p>The class should be applied when the <code>&lt;button&gt;</code> is clicked for the first time.</p><p>Here's how the finished app should look like BEFORE the button was clicked:</p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-01-25_20-03-23-02fdb3ce682409032876037dd28b863f.png\"></p><p>Here's how it should look like AFTER&nbsp;the button was clicked:</p><p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-01-25_20-03-24-7c8e4ce80ee28148c63cfe980f251d9d.png\"></p><p><br></p><p><em>Important:&nbsp;Use </em><code><em>React.useState()</em></code><em> instead of just </em><code><em>useState()</em></code><em> as the latter can cause problems in this Udemy code environment.</em></p>",
+      "sourceFile": "036 Dynamic Styling.html"
+    },
+    {
+      "id": "038-dynamic-list-content",
+      "title": "038 Dynamic List Content",
+      "slug": "038-dynamic-list-content",
+      "hasTests": true,
+      "rawInstructions": "<p>You're working on a \"Todo List\" web app and your task is to <strong>output a list of dummy todo items</strong> <strong>dynamically</strong>. For this task, a <code>Todo</code> component has been prepared for you, though you must still add some code to it to <strong>receive and output</strong> the todo text.</p><p>To be more precise:&nbsp;In the <code>App</code> component, you should transform the <code>DUMMY_TODOS</code> array that's provided to you (which must not be changed!) to a list of JSX elements (<code>&lt;Todo&gt;</code> elements to be precise). Every <code>Todo</code> component item must receive and output the todo text via a prop called <code>text</code>.</p><p>The final UI&nbsp;should look like this:</p><img src=\"https://img-c.udemycdn.com/redactor/raw/coding_exercise_instructions/2023-09-06_13-03-48-88bea1a267e5172ede956ab99d3e73aa.jpg\">",
+      "sourceFile": "038 Dynamic List Content.html"
+    }
+  ],
+  "quizzes": [
+    {
+      "title": "009 Components & JSX",
+      "slug": "009-components-jsx",
+      "file": "009 Components & JSX.html",
+      "url": "/quizzes/009-components-jsx.html"
+    },
+    {
+      "title": "017 Dynamic Values & Props",
+      "slug": "017-dynamic-values-props",
+      "file": "017 Dynamic Values & Props.html",
+      "url": "/quizzes/017-dynamic-values-props.html"
+    },
+    {
+      "title": "027 Best Practices & Event Handling",
+      "slug": "027-best-practices-event-handling",
+      "file": "027 Best Practices & Event Handling.html",
+      "url": "/quizzes/027-best-practices-event-handling.html"
+    },
+    {
+      "title": "032 State & Computed Values",
+      "slug": "032-state-computed-values",
+      "file": "032 State & Computed Values.html",
+      "url": "/quizzes/032-state-computed-values.html"
+    },
+    {
+      "title": "039 Conditional Content & Dynamic Lists",
+      "slug": "039-conditional-content-dynamic-lists",
+      "file": "039 Conditional Content & Dynamic Lists.html",
+      "url": "/quizzes/039-conditional-content-dynamic-lists.html"
+    }
+  ]
+}
