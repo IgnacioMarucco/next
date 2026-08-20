@@ -18,7 +18,7 @@ export default function App() {
   const activeExercise = exercisesList.find((e) => e.id === activeId);
   const ActiveComponent = exerciseComponents[activeId];
 
-  // Dynamic CSS injection for active exercise
+  // Scoped CSS injection for active exercise (prevents body style pollution)
   useEffect(() => {
     if (!activeExercise) return;
     
@@ -29,12 +29,31 @@ export default function App() {
     const styleId = 'active-exercise-styles';
     let styleTag = document.getElementById(styleId);
     if (!styleTag) {
-      styleTag = document.createElement('link');
+      styleTag = document.createElement('style');
       styleTag.id = styleId;
-      styleTag.rel = 'stylesheet';
       document.head.appendChild(styleTag);
     }
-    styleTag.href = `/src/exercises/${activeExercise.slug}/index.css`;
+
+    // Remove any previous link tag if it exists
+    const oldLink = document.querySelector('link#active-exercise-styles');
+    if (oldLink) oldLink.remove();
+
+    // Fetch and scope exercise CSS
+    fetch(`/src/exercises/${activeExercise.slug}/index.css`)
+      .then((res) => {
+        if (!res.ok) throw new Error('CSS not found');
+        return res.text();
+      })
+      .then((css) => {
+        // Scope 'body' selectors to '.render-box' exclusively
+        const scopedCss = css
+          .replace(/(^|[\s,}])body\s*\{/g, '$1.render-box {')
+          .replace(/(^|[\s,}])body\s+([^{]+)\{/g, '$1.render-box $2{');
+        styleTag.textContent = scopedCss;
+      })
+      .catch(() => {
+        styleTag.textContent = '';
+      });
   }, [activeExercise]);
 
   // Handle Escape key to close modals/lightbox
