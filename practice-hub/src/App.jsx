@@ -6,6 +6,11 @@ export default function App() {
   const [showInstructions, setShowInstructions] = useState(true);
   const [showQuizzes, setShowQuizzes] = useState(false);
   const [selectedQuizUrl, setSelectedQuizUrl] = useState(null);
+  const [zoomImageSrc, setZoomImageSrc] = useState(null);
+
+  // In-browser test runner state
+  const [isRunningTests, setIsRunningTests] = useState(false);
+  const [testResult, setTestResult] = useState(null);
 
   const activeExercise = exercisesList.find((e) => e.id === activeId);
   const ActiveComponent = exerciseComponents[activeId];
@@ -14,6 +19,9 @@ export default function App() {
   useEffect(() => {
     if (!activeExercise) return;
     
+    // Clear test result on exercise change
+    setTestResult(null);
+
     const styleId = 'active-exercise-styles';
     let styleTag = document.getElementById(styleId);
     if (!styleTag) {
@@ -24,6 +32,51 @@ export default function App() {
     }
     styleTag.href = `/src/exercises/${activeExercise.slug}/index.css`;
   }, [activeExercise]);
+
+  // Handle Escape key to close modals/lightbox
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setZoomImageSrc(null);
+        setSelectedQuizUrl(null);
+        setShowQuizzes(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Handle clicks inside instruction panel (intercept image clicks for Lightbox)
+  const handleInstructionsClick = (e) => {
+    if (e.target.tagName === 'IMG') {
+      e.preventDefault();
+      setZoomImageSrc(e.target.src);
+    }
+  };
+
+  // Run tests for current active exercise
+  const handleRunTests = async () => {
+    if (!activeExercise || isRunningTests) return;
+
+    setIsRunningTests(true);
+    setTestResult(null);
+
+    try {
+      const response = await fetch(`/api/run-tests?exercise=${encodeURIComponent(activeExercise.slug)}`);
+      const data = await response.json();
+      setTestResult(data);
+    } catch (err) {
+      setTestResult({
+        success: false,
+        error: true,
+        output: `Failed to connect to test server: ${err.message}`,
+        passedCount: 0,
+        failedCount: 1,
+      });
+    } finally {
+      setIsRunningTests(false);
+    }
+  };
 
   return (
     <div className="app-container">
@@ -76,9 +129,11 @@ export default function App() {
             <>
               <div className="panel-header">
                 <h2>{activeExercise.title}</h2>
+                <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>🔍 Click images to zoom</span>
               </div>
               <div
                 className="panel-body"
+                onClick={handleInstructionsClick}
                 dangerouslySetInnerHTML={{ __html: activeExercise.rawInstructions }}
               />
             </>
@@ -94,8 +149,28 @@ export default function App() {
                 src/exercises/{activeExercise?.slug}/App.jsx
               </code>
             </div>
-            <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-              💡 Save changes in VS Code to see instant hot reloads
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <button
+                className={`btn btn-test ${isRunningTests ? 'loading' : ''} ${
+                  testResult ? (testResult.success ? 'btn-test-pass' : 'btn-test-fail') : ''
+                }`}
+                onClick={handleRunTests}
+                disabled={isRunningTests}
+                title="Run automated tests for this exercise"
+              >
+                {isRunningTests ? (
+                  <>⏳ Running tests...</>
+                ) : testResult ? (
+                  testResult.success ? (
+                    <>✅ Passed ({testResult.passedCount})</>
+                  ) : (
+                    <>❌ Failed ({testResult.failedCount}) - Re-run</>
+                  )
+                ) : (
+                  <>🧪 Run Tests</>
+                )}
+              </button>
             </div>
           </div>
 
@@ -109,9 +184,53 @@ export default function App() {
                 <p>Exercise component not found.</p>
               )}
             </div>
+
+            {/* Test Results Drawer / Card */}
+            {testResult && (
+              <div className={`test-results-card ${testResult.success ? 'test-pass' : 'test-fail'}`}>
+                <div className="test-results-header">
+                  <div className="test-status-badge">
+                    {testResult.success ? '🎉 All Tests Passed!' : '⚠️ Tests Need Attention'}
+                  </div>
+                  <div className="test-meta">
+                    <span>
+                      {testResult.passedCount} passed, {testResult.failedCount} failed
+                    </span>
+                    {testResult.duration && <span style={{ opacity: 0.7 }}>• {testResult.duration}ms</span>}
+                    <button className="test-close-btn" onClick={() => setTestResult(null)}>✕</button>
+                  </div>
+                </div>
+                <div className="test-output-box">
+                  <pre>{testResult.output}</pre>
+                </div>
+              </div>
+            )}
           </div>
         </main>
       </div>
+
+      {/* Lightbox Modal for Instruction Images */}
+      {zoomImageSrc && (
+        <div className="lightbox-backdrop" onClick={() => setZoomImageSrc(null)}>
+          <div className="lightbox-container" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="lightbox-close"
+              onClick={() => setZoomImageSrc(null)}
+              title="Close (Esc)"
+            >
+              ✕
+            </button>
+            <img
+              src={zoomImageSrc}
+              alt="Zoomed reference design"
+              className="lightbox-image"
+            />
+            <div className="lightbox-caption">
+              🔍 Reference screenshot from course instructions (Click anywhere or press Esc to close)
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Quizzes List Modal */}
       {showQuizzes && (
