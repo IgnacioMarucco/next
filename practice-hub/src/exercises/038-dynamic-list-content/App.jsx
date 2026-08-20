@@ -13,7 +13,9 @@ export default function App() {
 
   return (
     <ul>
-      {/* TODO */}
+      {DUMMY_TODOS.map((title, index) => (
+        <Todo title={title} key={index} />
+      ))}
     </ul>
   );
 }
