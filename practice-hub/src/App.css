@@ -504,3 +504,245 @@ body {
     transform: translateY(0);
   }
 }
+
+/* Modern Docked Test Console */
+.test-dock {
+  background: #090d16;
+  border-top: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+  max-height: 80vh;
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+
+.test-dock.maximized {
+  height: 75vh;
+}
+
+.test-dock.dock-pass {
+  border-top-color: #10b981;
+}
+
+.test-dock.dock-fail {
+  border-top-color: #ef4444;
+}
+
+.dock-header {
+  background: #0f172a;
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dock-title-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dock-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.badge-pass {
+  background: #10b981;
+  color: white;
+}
+
+.badge-fail {
+  background: #ef4444;
+  color: white;
+}
+
+.dock-stats {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.dock-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px;
+  border-radius: 6px;
+}
+
+.dock-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dock-tab:hover {
+  color: white;
+}
+
+.dock-tab.active {
+  background: #334155;
+  color: #ffffff;
+}
+
+.dock-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dock-btn {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dock-btn:hover {
+  background: #334155;
+  color: white;
+}
+
+.dock-btn-close:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}
+
+.dock-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.25rem;
+  background: #070a12;
+}
+
+.dock-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 1rem;
+  color: #94a3b8;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #38bdf8;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Test Cards in Checklist */
+.test-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.test-card {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #0d1322;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.test-card.card-pass {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.test-card.card-fail {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: #180d14;
+}
+
+.test-card-header {
+  padding: 0.65rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.test-icon {
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.card-pass .test-icon {
+  color: #10b981;
+}
+
+.card-fail .test-icon {
+  color: #ef4444;
+}
+
+.test-name {
+  flex: 1;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.test-time {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+}
+
+.test-error-box {
+  background: #05070e;
+  border-top: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 0.75rem 1rem;
+}
+
+.test-error-box pre {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #fca5a5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.test-raw-box {
+  background: #05070e;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.test-raw-box pre {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}

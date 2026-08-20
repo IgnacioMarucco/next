@@ -11,6 +11,9 @@ export default function App() {
   // In-browser test runner state
   const [isRunningTests, setIsRunningTests] = useState(false);
   const [testResult, setTestResult] = useState(null);
+  const [testDockOpen, setTestDockOpen] = useState(false);
+  const [testDockMaximized, setTestDockMaximized] = useState(false);
+  const [activeTestTab, setActiveTestTab] = useState('checklist'); // 'checklist' | 'raw'
 
   const activeExercise = exercisesList.find((e) => e.id === activeId);
   const ActiveComponent = exerciseComponents[activeId];
@@ -19,8 +22,9 @@ export default function App() {
   useEffect(() => {
     if (!activeExercise) return;
     
-    // Clear test result on exercise change
+    // Clear test result when switching exercises
     setTestResult(null);
+    setTestDockOpen(false);
 
     const styleId = 'active-exercise-styles';
     let styleTag = document.getElementById(styleId);
@@ -59,7 +63,7 @@ export default function App() {
     if (!activeExercise || isRunningTests) return;
 
     setIsRunningTests(true);
-    setTestResult(null);
+    setTestDockOpen(true);
 
     try {
       const response = await fetch(`/api/run-tests?exercise=${encodeURIComponent(activeExercise.slug)}`);
@@ -72,6 +76,14 @@ export default function App() {
         output: `Failed to connect to test server: ${err.message}`,
         passedCount: 0,
         failedCount: 1,
+        totalCount: 1,
+        testCases: [
+          {
+            name: 'Execution Error',
+            status: 'fail',
+            error: err.message,
+          },
+        ],
       });
     } finally {
       setIsRunningTests(false);
@@ -163,14 +175,24 @@ export default function App() {
                   <>⏳ Running tests...</>
                 ) : testResult ? (
                   testResult.success ? (
-                    <>✅ Passed ({testResult.passedCount})</>
+                    <>✅ Passed ({testResult.passedCount}/{testResult.totalCount})</>
                   ) : (
-                    <>❌ Failed ({testResult.failedCount}) - Re-run</>
+                    <>❌ Failed ({testResult.failedCount}/{testResult.totalCount}) - Re-run</>
                   )
                 ) : (
                   <>🧪 Run Tests</>
                 )}
               </button>
+
+              {testResult && !testDockOpen && (
+                <button
+                  className="btn"
+                  onClick={() => setTestDockOpen(true)}
+                  style={{ fontSize: '0.8rem' }}
+                >
+                  📋 View Results
+                </button>
+              )}
             </div>
           </div>
 
@@ -184,28 +206,98 @@ export default function App() {
                 <p>Exercise component not found.</p>
               )}
             </div>
+          </div>
 
-            {/* Test Results Drawer / Card */}
-            {testResult && (
-              <div className={`test-results-card ${testResult.success ? 'test-pass' : 'test-fail'}`}>
-                <div className="test-results-header">
-                  <div className="test-status-badge">
-                    {testResult.success ? '🎉 All Tests Passed!' : '⚠️ Tests Need Attention'}
-                  </div>
-                  <div className="test-meta">
-                    <span>
-                      {testResult.passedCount} passed, {testResult.failedCount} failed
+          {/* Docked Test Results Drawer at Bottom */}
+          {testDockOpen && (
+            <div className={`test-dock ${testDockMaximized ? 'maximized' : ''} ${testResult?.success ? 'dock-pass' : 'dock-fail'}`}>
+              <div className="dock-header">
+                <div className="dock-title-group">
+                  <span className={`dock-badge ${testResult?.success ? 'badge-pass' : 'badge-fail'}`}>
+                    {isRunningTests ? '⏳ Running tests...' : testResult?.success ? '🎉 All Tests Passed' : '⚠️ Tests Failing'}
+                  </span>
+
+                  {testResult && !isRunningTests && (
+                    <span className="dock-stats">
+                      <strong>{testResult.passedCount}</strong> passed, <strong>{testResult.failedCount}</strong> failed
+                      {testResult.duration && <span style={{ opacity: 0.7 }}> ({testResult.duration}ms)</span>}
                     </span>
-                    {testResult.duration && <span style={{ opacity: 0.7 }}>• {testResult.duration}ms</span>}
-                    <button className="test-close-btn" onClick={() => setTestResult(null)}>✕</button>
+                  )}
+
+                  <div className="dock-tabs">
+                    <button
+                      className={`dock-tab ${activeTestTab === 'checklist' ? 'active' : ''}`}
+                      onClick={() => setActiveTestTab('checklist')}
+                    >
+                      📋 Checklist
+                    </button>
+                    <button
+                      className={`dock-tab ${activeTestTab === 'raw' ? 'active' : ''}`}
+                      onClick={() => setActiveTestTab('raw')}
+                    >
+                      💻 Terminal Output
+                    </button>
                   </div>
                 </div>
-                <div className="test-output-box">
-                  <pre>{testResult.output}</pre>
+
+                <div className="dock-actions">
+                  <button
+                    className="dock-btn"
+                    onClick={() => setTestDockMaximized(!testDockMaximized)}
+                    title={testDockMaximized ? 'Restore view' : 'Maximize test console'}
+                  >
+                    {testDockMaximized ? '🗗 Restore' : '⛶ Maximize'}
+                  </button>
+                  <button
+                    className="dock-btn dock-btn-close"
+                    onClick={() => setTestDockOpen(false)}
+                    title="Hide test drawer"
+                  >
+                    ✕
+                  </button>
                 </div>
               </div>
-            )}
-          </div>
+
+              <div className="dock-content">
+                {isRunningTests ? (
+                  <div className="dock-loading">
+                    <div className="spinner"></div>
+                    <p>Executing Bun test runner for {activeExercise?.title}...</p>
+                  </div>
+                ) : activeTestTab === 'checklist' ? (
+                  <div className="test-checklist">
+                    {testResult?.testCases && testResult.testCases.length > 0 ? (
+                      testResult.testCases.map((tc, idx) => (
+                        <div
+                          key={idx}
+                          className={`test-card ${tc.status === 'pass' ? 'card-pass' : 'card-fail'}`}
+                        >
+                          <div className="test-card-header">
+                            <span className="test-icon">{tc.status === 'pass' ? '✓' : '✗'}</span>
+                            <span className="test-name">{tc.name}</span>
+                            {tc.duration && <span className="test-time">{tc.duration}</span>}
+                          </div>
+                          {tc.error && (
+                            <div className="test-error-box">
+                              <pre>{tc.error}</pre>
+                            </div>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <div className="test-error-box" style={{ margin: '1rem' }}>
+                        <pre>{testResult?.output || 'No detailed test results available.'}</pre>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="test-raw-box">
+                    <pre>{testResult?.output || 'No output recorded.'}</pre>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </main>
       </div>
 
