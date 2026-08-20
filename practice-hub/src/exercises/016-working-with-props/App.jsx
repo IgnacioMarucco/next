@@ -1,11 +1,11 @@
 import React from 'react';
 
-export function CourseGoal(props) {
+export function CourseGoal({ title, description }) {
   // TODO: Accept title and description props and output them
   return (
     <li>
-      <h2>{/* TODO: Title */}</h2>
-      <p>{/* TODO: Description */}</p>
+      <h2>{title}</h2>
+      <p>{description}</p>
     </li>
   );
 }
@@ -17,6 +17,8 @@ function App() {
       <p>One course, many goals! 🎯</p>
       <ul>
         {/* TODO: Render at least two <CourseGoal /> components */}
+        <CourseGoal title="Learn React" description="In-depth" />
+        <CourseGoal title="Learn Next" description="Lets gooooo" />
       </ul>
     </div>
   );
