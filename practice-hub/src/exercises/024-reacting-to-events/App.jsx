@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from "react";
 
 export const user = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   loggedIn: false,
 };
 
 function App() {
   function handleLogin() {
     // TODO: Update user.email, user.password, and user.loggedIn
+    user.email = "email";
+    user.password = "pass";
+    user.loggedIn = true;
   }
 
   return (
