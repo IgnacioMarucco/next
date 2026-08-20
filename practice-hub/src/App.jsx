@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { exercisesList, quizzesList, exerciseComponents } from './registry.jsx';
+import { exercisesList, quizzesList, exerciseComponents, exerciseRawStyles } from './registry.jsx';
 
 export default function App() {
   const [activeId, setActiveId] = useState(exercisesList[0]?.id || '');
@@ -18,7 +18,7 @@ export default function App() {
   const activeExercise = exercisesList.find((e) => e.id === activeId);
   const ActiveComponent = exerciseComponents[activeId];
 
-  // Scoped CSS injection for active exercise (prevents body style pollution)
+  // Guaranteed scoped CSS injection for active exercise
   useEffect(() => {
     if (!activeExercise) return;
     
@@ -34,26 +34,24 @@ export default function App() {
       document.head.appendChild(styleTag);
     }
 
-    // Remove any previous link tag if it exists
+    // Remove any legacy link tags
     const oldLink = document.querySelector('link#active-exercise-styles');
     if (oldLink) oldLink.remove();
 
-    // Fetch and scope exercise CSS
-    fetch(`/src/exercises/${activeExercise.slug}/index.css`)
-      .then((res) => {
-        if (!res.ok) throw new Error('CSS not found');
-        return res.text();
-      })
-      .then((css) => {
-        // Scope 'body' selectors to '.render-box' exclusively
-        const scopedCss = css
-          .replace(/(^|[\s,}])body\s*\{/g, '$1.render-box {')
-          .replace(/(^|[\s,}])body\s+([^{]+)\{/g, '$1.render-box $2{');
-        styleTag.textContent = scopedCss;
-      })
-      .catch(() => {
-        styleTag.textContent = '';
-      });
+    const styleKey = `./exercises/${activeExercise.slug}/index.css`;
+    const rawCss = exerciseRawStyles[styleKey] || '';
+
+    if (rawCss) {
+      // Scope 'body' selectors to '.render-box' so it styles only the component
+      const scopedCss = rawCss
+        .replace(/(^|[\s,}])body\s*\{/g, '$1.render-box {')
+        .replace(/(^|[\s,}])body\s+([^{]+)\{/g, '$1.render-box $2{')
+        .replace(/(^|[\s,}])\*\s*\{/g, '$1.render-box, .render-box * {');
+
+      styleTag.textContent = scopedCss;
+    } else {
+      styleTag.textContent = '';
+    }
   }, [activeExercise]);
 
   // Handle Escape key to close modals/lightbox
