@@ -21,7 +21,7 @@ function App() {
         {/* TODO: Call handleCreateUser with a name argument on click */}
         <button
           onClick={() => {
-            handleCreateUser("");
+            handleCreateUser("Nacho");
           }}
         >
           Create User
