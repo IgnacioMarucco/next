@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>032 State & Computed Values</title>
+  <title>State & Computed Values</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -225,8 +225,8 @@
     const questions = rawQuizData.questions || [];
     const userAnswers = new Map(); // questionIndex -> { selectedIndex, isCorrect }
 
-    document.getElementById('quiz-title-nav').textContent = "032 State & Computed Values";
-    document.getElementById('quiz-title-main').textContent = "032 State & Computed Values";
+    document.getElementById('quiz-title-nav').textContent = rawQuizData.quiz_title || 'Quiz';
+    document.getElementById('quiz-title-main').textContent = rawQuizData.quiz_title || 'React Quiz';
     document.getElementById('quiz-desc').textContent = rawQuizData.quiz_description || 'Select the correct answer for each question below and click Submit.';
 
     function updateScore() {
