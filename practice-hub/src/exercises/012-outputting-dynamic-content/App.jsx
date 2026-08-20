@@ -11,8 +11,12 @@ export function User() {
     <div id="user" data-testid="user">
       <h2>
         {/* TODO: Output user's first and last name from userData */}
+        {userData.firstName} {userData.lastName}
       </h2>
-      <p>{/* TODO: Output user's title from userData */}</p>
+      <p>
+        {/* TODO: Output user's title from userData */}
+        {userData.title}
+      </p>
     </div>
   );
 }
